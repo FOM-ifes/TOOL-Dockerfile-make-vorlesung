@@ -21,7 +21,7 @@ wobei <tag> nur eine neuen Tag ersetzt werden muss. Z.B.: v0.4
 Mit dem Befehl
 
 ```
-> docker load nmarkgraf/make-vorlasung:latest
+> docker pull nmarkgraf/make-vorlasungen:latest
 ```
 
 wird die Version mit dem tag *v0.4* vom Docker hub geladen.
