@@ -3,40 +3,29 @@
 Dockerfile und Co zum Erzeugen eines Docker images zum Übersetzen von Vorlesungsskripten
 
 
-# Wie erstellt man ein neues Docker images?
+## Wie erstellt man ein neues Docker images?
 
 Erstellen eines neuen Docker images mit:
 
-> docker build -t nmarkgraf/make-vorlesungen:<tag> .
+> docker build -t nmarkgraf/make-vorlesungen .
+> docker tag nmarkgraf/make-vorlesungen nmarkgraf/make-vorlesungen:<tag> .
 
 wobei <tag> nur eine neuen Tag ersetzt werden muss. Z.B.: v0.4
 
 
-# Wie läd man ein Docker images vom Docker hub?
-<<<<<<< HEAD
+## Wie läd man ein Docker images vom Docker hub?
 
 Mit dem Befehl
 
-> docker load nmarkgraf/make-vorlasung:v0.4
+> docker load nmarkgraf/make-vorlasung:latest
 
 wird die Version mit dem tag *v0.4* vom Docker hub geladen.
 
 Über https://registry.hub.docker.com/repository/docker/nmarkgraf/make-vorlesungen kann man sich ansehen,
 weche tags gerade auf dem Hub gespeichert sind.
 
-=======
 
-Mit dem Befehl
-
-> docker load nmarkgraf/make-vorlasung:v0.4
-
-wird die Version mit dem tag *v0.4* vom Docker hub geladen.
-
-Über https://registry.hub.docker.com/repository/docker/nmarkgraf/make-vorlesungen kann man sich ansehen,
-weche tags gerade auf dem Hub gespeichert sind.
-
->>>>>>> edb6bf5aad0ae0ef39ac75cd53b81d8763321238
-# Wie startet man ein neues Docker images?
+## Wie startet man ein neues Docker images?
 
 Starten eines Docker images mittels:
 
@@ -51,15 +40,23 @@ Anschliessend werden alle PDF Dateien aus dem Hauptverzeichnis (des Repositories
 
 Ebenso wird im Unterverzeichnis "log" alle erzeugten LOG Dateien gespeichert.
 
-# Wie können Entwickler neue images auf den Docker hun speichern?
+## Wie können Entwickler neue images auf den Docker hun speichern?
 
 Neue Versionen können (von Berechtigten!) mittels
 
-> docker push nmarkgraf/make-vorlesungen:v0.4 
+> docker push nmarkgraf/make-vorlesungen
 
-erstellt werden!
+erstellt werden! 
+Der gesamte Erstellungszyklus lautet also:
+
+> docker build -t nmarkgraf/make-vorlesungen .
+> docker tag nmarkgraf/make-vorlesungen nmarkgraf/make-vorlesungen:v0.4
+> docker push nmarkgraf/make-vorlesungen
+
 
 ## Aktuelle Version:
 
-v0.3: digest: sha256:d9cfad491ca270de9016b9b5a9608034e01ba6b287ef04c28f8d3809603eaffc size: 3469
+- latest: digest: sha256:d9cfad491ca270de9016b9b5a9608034e01ba6b287ef04c28f8d3809603eaffc size: 3469
+
+- v0.3: digest: sha256:d9cfad491ca270de9016b9b5a9608034e01ba6b287ef04c28f8d3809603eaffc size: 3469
 
