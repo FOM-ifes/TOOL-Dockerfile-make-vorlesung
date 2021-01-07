@@ -13,6 +13,7 @@ wobei <tag> nur eine neuen Tag ersetzt werden muss. Z.B.: v0.4
 
 
 # Wie läd man ein Docker images vom Docker hub?
+<<<<<<< HEAD
 
 Mit dem Befehl
 
@@ -23,6 +24,18 @@ wird die Version mit dem tag *v0.4* vom Docker hub geladen.
 Über https://registry.hub.docker.com/repository/docker/nmarkgraf/make-vorlesungen kann man sich ansehen,
 weche tags gerade auf dem Hub gespeichert sind.
 
+=======
+
+Mit dem Befehl
+
+> docker load nmarkgraf/make-vorlasung:v0.4
+
+wird die Version mit dem tag *v0.4* vom Docker hub geladen.
+
+Über https://registry.hub.docker.com/repository/docker/nmarkgraf/make-vorlesungen kann man sich ansehen,
+weche tags gerade auf dem Hub gespeichert sind.
+
+>>>>>>> edb6bf5aad0ae0ef39ac75cd53b81d8763321238
 # Wie startet man ein neues Docker images?
 
 Starten eines Docker images mittels:
