@@ -24,10 +24,22 @@ Mit dem Befehl
 > docker pull nmarkgraf/make-vorlasungen:latest
 ```
 
-wird die Version mit dem tag *v0.4* vom Docker hub geladen.
+wird die aktuelle Version geladen.
+
+Allgemein kann man die Version mit dem tag *<tag>* durch den Befehl:
+
+```
+> docker pull nmarkgraf/make-vorlasungen:<tag>
+```
+
+laden. Will mann zum Beispiel die Version *v0.4* laden, so geht das mit:
+```
+> docker pull nmarkgraf/make-vorlasungen:v0.4
+```
+
 
 Über https://registry.hub.docker.com/repository/docker/nmarkgraf/make-vorlesungen kann man sich ansehen,
-weche tags gerade auf dem Hub gespeichert sind.
+weche tags gerade auf dem Hub gespeichert sind und damit von den Nutzer*innen geladen werden können.
 
 
 ## Wie startet man ein neues Docker images?
