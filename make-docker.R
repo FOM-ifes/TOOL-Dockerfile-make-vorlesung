@@ -95,3 +95,18 @@ for (pdf in dir_list) {
             copy.mode = TRUE,
             copy.date = TRUE)
 }
+
+# Alle Log-dateien ebenfalls kopieren
+
+results_log_path <- file.path(results_path, "log")
+dir.create(results_log_path, recursive = TRUE)
+dir_list <- list.files(".", ".log$", recursive = TRUE)
+
+for (log in dir_list) {
+  file.copy(from = log,
+            to = results_log_path,
+            overwrite = TRUE,
+            recursive = FALSE,
+            copy.mode = TRUE,
+            copy.date = TRUE)
+}
