@@ -41,7 +41,13 @@ RUN install2.r --error \
     lambda.r \
     latex2exp \
     optparse \
-    getopt 
+    getopt \
+    dagitty ggraph tidygraph ggdag \
+    fracdiff lmtest timeDate tseries urca zoo RcppArmadillo forecast \
+    scatterplot3d vcd seriation plotly visNetwork arulesViz \
+    gplots ROCR \
+    xts \
+    gert cerdentials
 
 RUN mkdir /home/Vorlesungen
 RUN mkdir /home/Vorlesungen/results
