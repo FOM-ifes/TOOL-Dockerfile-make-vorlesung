@@ -10,7 +10,16 @@ RUN /rocker_scripts/install_tidyverse.sh
 ENV CTAN_REPO=http://mirror.ctan.org/systems/texlive/tlnet
 ENV PATH=/usr/local/texlive/bin/x86_64-linux:$PATH
 RUN /rocker_scripts/install_verse.sh
-
+RUN tlmgr install amscls amsmath amsmath auxhook beamer bigintcalc bitset \
+                  etexcmds etoolbox fp geometry gettitlestring hycolor \
+                  hyperref iftex intcalc kvdefinekeys kvsetkeys letltxmacro \
+                  ltxcmds ms pdfescape pdftexcmds pgf refcount rerunfilecheck \
+                  stringenc translator uniquecounter xcolor zapfding eurosym \
+                  ragged2e pgfplots xstring fancyvrb framed booktabs caption \
+                  verbatimbox readarray listofitems colortbl adjustbox \
+                  collectbox csquotes babel-german epstopdf-pkg grfext \
+                  fpl mathpazo palatino dvips.x86_64-linux dvips eulervm \
+                  symbol psnfss kvoptions infwarerr
 RUN apt-get update && \
     apt-get -y install python3-pip tcl tk expect \
     && pip3 install panflute
