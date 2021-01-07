@@ -43,6 +43,7 @@ if (!is.null(opt$username)) {
   password <- opt$password
 }
 
+cred <- NULL
 
 # Setzen der Zugangsdaten (falls nötig/möglich)
 if (!is.null(username)) {
@@ -68,8 +69,12 @@ repo_path <- file.path("/home/Vorlesungen", repo_name)
 dir.create(repo_path, recursive = TRUE)
 
 
+print(cred)
+
 ## Clone the git2r repository
-repo <- clone(repo_url, repo_path, credentials=cred)
+repo <- clone(url = repo_url,
+              local_path = repo_path, 
+              credentials = cred)
 
 # In das geklonte Verzeichnis wechseln
 setwd(repo_path)
