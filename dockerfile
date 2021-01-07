@@ -47,7 +47,7 @@ RUN install2.r --error \
     scatterplot3d vcd seriation plotly visNetwork arulesViz \
     gplots ROCR \
     xts \
-    gert cerdentials
+    gert credentials
 
 RUN mkdir /home/Vorlesungen
 RUN mkdir /home/Vorlesungen/results
