@@ -9,25 +9,25 @@ library(optparse)
 
 option_list = list(
     make_option(c("-u", "--username"),
-                type="character",
-                default=NULL,
-                help="Benutzername GitHub",
-                metavar="character"),
+                type = "character",
+                default = NULL,
+                help = "Benutzername GitHub",
+                metavar = "character"),
     make_option(c("-p", "--password"),
-                type="character",
-                default=NULL,
-                help="Passwort für den GitHub Account",
-                metavar="character"),
+                type = "character",
+                default = NULL,
+                help = "Passwort für den GitHub Account",
+                metavar = "character"),
     make_option(c("-r", "--repourl"),
-                type="character",
-                default="https://github.com/NMarkgraf/MathGrundDer-W-Info",
-                help="URL zum Repository [default= %default]",
-                metavar="character")
+                type = "character",
+                default = "https://github.com/NMarkgraf/MathGrundDer-W-Info",
+                help = "URL zum Repository [default= %default]",
+                metavar = "character"),
     make_option(c("-n", "--name"),
-                            type="character",
-                            default="Vorlesungen",
-                            help="Name des Repository [default= %default]",
-                            metavar="character")
+                type = "character",
+                default = "Vorlesungen",
+                help = "Name des Repository [default= %default]",
+                metavar = "character")
 );
 
 opt_parser <- OptionParser(option_list=option_list);
@@ -46,7 +46,7 @@ if (!is.null(opt$username)) {
 
 # Setzen der Zugangsdaten (falls nötig/möglich)
 if (!is.null(username)) {
-  if (!is.null(passwort)) {
+  if (!is.null(password)) {
     cred <- cred_user_pass(username = username, password = password)
   } else {
     cred <- cred_user_pass(username = username)
@@ -55,7 +55,7 @@ if (!is.null(username)) {
   cred <- NULL
 }
 
-repo_name <- opt$Name
+repo_name <- opt$name
 repo_url <- opt$repourl
 
 # Lade das Repository "Vorlesungen" von GitHub
@@ -64,15 +64,15 @@ repo_url <- opt$repourl
 # path <- file.path(tempfile(pattern="git2r-"), repo_name)
 
 # Verzeichnis anlegen in welches das Ropsiory geclont wird:
-path <- file.path("/home/Vorlesungen", repo_name)
-dir.create(path, recursive=TRUE)
+repo_path <- file.path("/home/Vorlesungen", repo_name)
+dir.create(repo_path, recursive = TRUE)
 
 
 ## Clone the git2r repository
-repo <- clone(repo_url, path, credentials=cred)
+repo <- clone(repo_url, repo_path, credentials=cred)
 
 # In das geklonte Verzeichnis wechseln
-setwd(path)
+setwd(repo_path)
 
 # Zuerst das "RunMeFirst.R" starten, damit alle weiteren Pakete
 # installiert werden
@@ -87,7 +87,7 @@ dir_list <- list.files(".", ".pdf$")
 
 results_path <- "/home/Vorlesungen/results"
 
-for(pdf in dir_list) {
+for (pdf in dir_list) {
   file.copy(from = pdf,
             to = results_path,
             overwrite = TRUE,

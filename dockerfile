@@ -40,4 +40,6 @@ WORKDIR /home/Vorlesungen
 
 COPY make-docker.R /home/Vorlesungen
 
-ENTRYPOINT Rscript make-docker.R
+ENTRYPOINT ["Rscript", "make-docker.R"]
+
+CMD ["--help"]
