@@ -42,12 +42,16 @@ Um ein bestimmtes Repository zu benutzen:
 
 ```
 > docker run -v /Volumes/norman/Docker/results:/home/Vorlesungen/results \
-             -it nmarkgraf/make-vorlesungen:v0.4 --repourl=https://github.com/luebby/Vorlesungen \
-             --username=USERNAME --password=PASSWORD
+             -it nmarkgraf/make-vorlesungen:latest \
+             --repourl=https://github.com/luebby/Vorlesungen \
+             --username=USERNAME \
+             --password=PASSWORD
 ```
 
 Damit wird ein Repository geclont und die Dateien "RunMeFirst.R" und "makerender.R" aus dem Repository ausgeführt.
 Anschliessend werden alle PDF Dateien aus dem Hauptverzeichnis (des Repositories) unter "/Volmes/norman/Docker/results" (also dem lokalen Verzeichnis) gespeichert.
+Statt **USERNAME** und **PASSWORD** müssen (ggf. bei privaten Repositories) 
+die Login-Daten für GutHub eingesetzt werden.
 
 Ebenso wird im Unterverzeichnis "log" alle erzeugten LOG Dateien gespeichert.
 
