@@ -7,8 +7,11 @@ Dockerfile und Co zum Erzeugen eines Docker images zum Übersetzen von Vorlesung
 
 Erstellen eines neuen Docker images mit:
 
+```
 > docker build -t nmarkgraf/make-vorlesungen .
 > docker tag nmarkgraf/make-vorlesungen nmarkgraf/make-vorlesungen:<tag> .
+```
+
 
 wobei <tag> nur eine neuen Tag ersetzt werden muss. Z.B.: v0.4
 
@@ -17,7 +20,9 @@ wobei <tag> nur eine neuen Tag ersetzt werden muss. Z.B.: v0.4
 
 Mit dem Befehl
 
+```
 > docker load nmarkgraf/make-vorlasung:latest
+```
 
 wird die Version mit dem tag *v0.4* vom Docker hub geladen.
 
@@ -29,11 +34,17 @@ weche tags gerade auf dem Hub gespeichert sind.
 
 Starten eines Docker images mittels:
 
+```
 > docker run -v /Volumes/norman/Docker/results:/home/Vorlesungen/results -it nmarkgraf/make-vorlesungen:<tag>
+```
 
 Um ein bestimmtes Repository zu benutzen:
 
-> docker run -v /Volumes/norman/Docker/results:/home/Vorlesungen/results -it nmarkgraf/make-vorlesungen:v0.4 --repourl=https://github.com/luebby/Vorlesungen --username=USERNAME --password=PASSWORD
+```
+> docker run -v /Volumes/norman/Docker/results:/home/Vorlesungen/results \
+             -it nmarkgraf/make-vorlesungen:v0.4 --repourl=https://github.com/luebby/Vorlesungen \
+             --username=USERNAME --password=PASSWORD
+```
 
 Damit wird ein Repository geclont und die Dateien "RunMeFirst.R" und "makerender.R" aus dem Repository ausgeführt.
 Anschliessend werden alle PDF Dateien aus dem Hauptverzeichnis (des Repositories) unter "/Volmes/norman/Docker/results" (also dem lokalen Verzeichnis) gespeichert.
@@ -44,15 +55,20 @@ Ebenso wird im Unterverzeichnis "log" alle erzeugten LOG Dateien gespeichert.
 
 Neue Versionen können (von Berechtigten!) mittels
 
+```
 > docker push nmarkgraf/make-vorlesungen
+```
 
 erstellt werden! 
+
 Der gesamte Erstellungszyklus lautet also:
 
+
+```
 > docker build -t nmarkgraf/make-vorlesungen .
 > docker tag nmarkgraf/make-vorlesungen nmarkgraf/make-vorlesungen:v0.4
 > docker push nmarkgraf/make-vorlesungen
-
+```
 
 ## Aktuelle Version:
 
