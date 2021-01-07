@@ -21,7 +21,7 @@ RUN tlmgr install amscls amsmath amsmath auxhook beamer bigintcalc bitset \
                   fpl mathpazo palatino dvips.x86_64-linux dvips eulervm \
                   symbol psnfss kvoptions infwarerr
 RUN apt-get update && \
-    apt-get -y install python3-pip tcl tk expect \
+    apt-get -y install git python3-pip tcl tk expect \
     && pip3 install panflute
 RUN apt-get clean
 RUN install2.r --error \
