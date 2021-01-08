@@ -20,7 +20,7 @@ RUN tlmgr install amscls amsmath amsmath auxhook beamer bigintcalc bitset \
                   verbatimbox readarray listofitems colortbl adjustbox \
                   collectbox csquotes babel-german epstopdf-pkg grfext \
                   fpl mathpazo palatino dvips.x86_64-linux dvips eulervm \
-                  symbol psnfss kvoptions infwarerr microtype systeme \\
+                  symbol psnfss kvoptions infwarerr microtype systeme \
                   hyphen-german 
 RUN apt-get update && \
     apt-get -y install git tcl tk expect imagemagick \
