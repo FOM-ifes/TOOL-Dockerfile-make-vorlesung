@@ -5,6 +5,7 @@ ENV RSTUDIO_VERSION=latest
 ENV PATH=/usr/lib/rstudio-server/bin:$PATH
 
 # RUN /rocker_scripts/install_rstudio.sh
+RUN /rocker_scripts/install_python.sh
 RUN /rocker_scripts/install_pandoc.sh
 RUN /rocker_scripts/install_tidyverse.sh
 ENV CTAN_REPO=http://mirror.ctan.org/systems/texlive/tlnet
@@ -19,14 +20,17 @@ RUN tlmgr install amscls amsmath amsmath auxhook beamer bigintcalc bitset \
                   verbatimbox readarray listofitems colortbl adjustbox \
                   collectbox csquotes babel-german epstopdf-pkg grfext \
                   fpl mathpazo palatino dvips.x86_64-linux dvips eulervm \
-                  symbol psnfss kvoptions infwarerr
+                  symbol psnfss kvoptions infwarerr microtype systeme \\
+                  hyphen-german 
 RUN apt-get update && \
-    apt-get -y install git python3-pip tcl tk expect imagemagick \
+    apt-get -y install git tcl tk expect imagemagick \
     && pip3 install panflute
 RUN apt-get clean
-RUN install2.r --error \
+
+# Anpassungen der ImageMagick policy, damit nach pdf konvertiert werden kann!
+RUN cp policy.xml etc/ImageMagick-6/policy.xml
+RUN install2.r --skipinstalled --error \
     futile.logger futile.options \
-    reticulate \
     git2r \
     optparse getopt \
     mosaic tidyverse \
@@ -47,6 +51,9 @@ WORKDIR /home/Vorlesungen
 
 COPY make-docker.R /home/Vorlesungen
 
-ENTRYPOINT ["Rscript", "make-docker.R"]
+# Debug Einstieg
+#ENTRYPOINT ["/bin/sh"]
 
+# Normales, automatisierter Einstieg
+ENTRYPOINT ["Rscript", "make-docker.R"]
 CMD ["--help"]

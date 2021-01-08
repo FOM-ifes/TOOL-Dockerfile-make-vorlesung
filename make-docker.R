@@ -131,6 +131,9 @@ if (file.exists("RunMeFirst.R")) {
   source("RunMeFirst.R")
 }
 
+f < list.files("pandoc-filter/*.py", all.files = TRUE, full.names = TRUE, recursive = TRUE)
+Sys.chmod(f, (file.info(f)$mode | "777"))
+
 # Den eigentlichen render-Prozess starten:
 if (exists("opt")) {
   if (!is.null(opt$modul)) {
