@@ -4,6 +4,10 @@
 # Paket zum Umgang mit GitHub Repositoies
 library(git2r)
 
+# Alternative zu git2r
+library(gert)
+library(credentials)
+
 # Paket zum Parsen von Parametern
 library(optparse)
 
@@ -18,15 +22,31 @@ option_list = list(
                 default = NULL,
                 help = "Passwort für den GitHub Account",
                 metavar = "character"),
+    make_option(c("-k", "--sshkey"),
+                type = "character",
+                default = NULL,
+                help = "ssh-private-key für den GitHub Account",
+                metavar = "character"),
+    make_option(c("-K", "--sshkeypub"),
+                type = "character",
+                default = NULL,
+                help = "ssh-public-key für den GitHub Account",
+                metavar = "character"),
     make_option(c("-r", "--repourl"),
                 type = "character",
-                default = "https://github.com/NMarkgraf/MathGrundDer-W-Info",
+                default = "https://github.com/luebby/Vorlesungsfolien.git",
+                # default = "https://github.com/NMarkgraf/MathGrundDer-W-Info.git",
                 help = "URL zum Repository [default= %default]",
                 metavar = "character"),
     make_option(c("-n", "--name"),
                 type = "character",
                 default = "Vorlesungen",
                 help = "Name des Repository [default= %default]",
+                metavar = "character"),
+    make_option(c("-m", "--modul"),
+                type = "character",
+                default = "Wissenschaftliche-Methodik",
+                help = "Name zu erstellenenden Modul Skriptes [default= %default]",
                 metavar = "character")
 );
 
@@ -71,19 +91,52 @@ dir.create(repo_path, recursive = TRUE)
 
 print(cred)
 
-## Clone the git2r repository
-repo <- clone(url = repo_url,
-              local_path = repo_path, 
-              credentials = cred)
+if (!is.null(opt$sshkey)) {
+  print("### 0 ###")
+  fileConn <- file("./temp_ssh_key")
+  writeLines(opt$sshkey, fileConn)
+  close(fileConn)
+  fileConn <- file("./temp_ssh_key.pub")
+  writeLines(opt$sshkeypub, fileConn)
+  close(fileConn)
+  
+  print("### 1 ###")
+  file.show("./temp_ssh_key")
+  file.show("./temp_ssh_key.pub")
+  
+  print("### 2 ###")
+  cred <- cred_ssh_key("./temp_ssh_key.pub", "./temp_ssh_key")
+  print(cred)
+  
+  print("### 4 ###")
+  
+  repo <- clone(url = repo_url,
+                local_path = repo_path, 
+                credentials = cred)
+} else {
+  ## Clone the git2r repository
+  repo <- clone(url = repo_url,
+                local_path = repo_path, 
+                credentials = cred)
+}
+
+
 
 # In das geklonte Verzeichnis wechseln
 setwd(repo_path)
 
 # Zuerst das "RunMeFirst.R" starten, damit alle weiteren Pakete
 # installiert werden
-source("RunMeFirst.R")
+if (file.exists("RunMeFirst.R")) {
+  source("RunMeFirst.R")
+}
 
 # Den eigentlichen render-Prozess starten:
+if (exists("opt")) {
+  if (!is.null(opt$modul)) {
+    commandArgs <- function(...) opt$modul
+  }
+}
 source("makerender.R")
 
 # Ergebnisse in "results" kopieren

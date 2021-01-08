@@ -21,33 +21,25 @@ RUN tlmgr install amscls amsmath amsmath auxhook beamer bigintcalc bitset \
                   fpl mathpazo palatino dvips.x86_64-linux dvips eulervm \
                   symbol psnfss kvoptions infwarerr
 RUN apt-get update && \
-    apt-get -y install git python3-pip tcl tk expect \
+    apt-get -y install git python3-pip tcl tk expect imagemagick \
     && pip3 install panflute
 RUN apt-get clean
 RUN install2.r --error \
-    mosaic \
-    tidyverse \
-    rmarkdown \
-    knitr \
-    tinytex \
-    git2r \
+    futile.logger futile.options \
     reticulate \
-    plot3D \
-    rgl \
-    futile.logger \
-    formatR \
-    futile.options \
-    wordcloud \
-    lambda.r \
-    latex2exp \
-    optparse \
-    getopt \
+    git2r \
+    optparse getopt \
+    mosaic tidyverse \
+    rmarkdown knitr tinytex gert credentials \
+    plot3D rgl formatR wordcloud lambda.r latex2exp \
     dagitty ggraph tidygraph ggdag \
     fracdiff lmtest timeDate tseries urca zoo RcppArmadillo forecast \
     scatterplot3d vcd seriation plotly visNetwork arulesViz \
-    gplots ROCR \
-    xts \
-    gert credentials
+    gplots ROCR xts \
+    hunspell tokenizers janeaustenr tidytext \
+    mnormt psych combinat questionr klaR proto showtext sysfonts emojifont \
+    mvtnorm lsr lsa kableExtra ineq ggfortify corrplot AlgDesign nFactors \
+    okcupiddata randomForest rpart.plot ggthemes
 
 RUN mkdir /home/Vorlesungen
 RUN mkdir /home/Vorlesungen/results

@@ -88,7 +88,8 @@ Der gesamte Erstellungszyklus lautet also:
 
 ## Aktuelle Version:
 
-- latest: digest: sha256:d9cfad491ca270de9016b9b5a9608034e01ba6b287ef04c28f8d3809603eaffc size: 3469
+- latest: digest: sha256:c3b10966899c75cdeb5e86d6f64a79e0f70b19a5285d479d5adbf2d51cb72d77 size: 3469
 
-- v0.3: digest: sha256:d9cfad491ca270de9016b9b5a9608034e01ba6b287ef04c28f8d3809603eaffc size: 3469
+- v0.5: digest: sha256:c3b10966899c75cdeb5e86d6f64a79e0f70b19a5285d479d5adbf2d51cb72d77 size: 3469
+
 
