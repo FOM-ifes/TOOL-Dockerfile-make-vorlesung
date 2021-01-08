@@ -46,7 +46,7 @@ option_list = list(
     make_option(c("-m", "--modul"),
                 type = "character",
                 default = "Wissenschaftliche-Methodik",
-                help = "Name zu erstellenenden Modul Skriptes [default= %default]",
+                help = "Name des zu erstellenden Modul Skriptes [default= %default]",
                 metavar = "character")
 );
 
