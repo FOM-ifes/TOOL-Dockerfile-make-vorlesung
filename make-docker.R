@@ -1,6 +1,7 @@
 #!/usr/bin/env Rscript
-# R Skript
-
+# ----------------------------------------------------------------------------
+# R Skript - (W) by N. Markgraf in 2021
+# ----------------------------------------------------------------------------
 # Paket zum Umgang mit GitHub Repositoies
 library(git2r)
 
@@ -131,7 +132,7 @@ if (file.exists("RunMeFirst.R")) {
   source("RunMeFirst.R")
 }
 
-f < list.files("pandoc-filter/*.py", all.files = TRUE, full.names = TRUE, recursive = TRUE)
+f <- list.files("pandoc-filter/*.py", all.files = TRUE, full.names = TRUE, recursive = TRUE)
 Sys.chmod(f, (file.info(f)$mode | "777"))
 
 # Den eigentlichen render-Prozess starten:

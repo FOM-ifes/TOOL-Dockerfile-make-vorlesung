@@ -51,18 +51,29 @@ Starten eines Docker images mittels:
               -it nmarkgraf/make-vorlesungen:<tag>
 ```
 
-Um ein bestimmtes Repository zu benutzen:
+Mittels 
+```
+> docker run -v /Volumes/norman/Docker/results:/home/Vorlesungen/results \ 
+              -it nmarkgraf/make-vorlesungen:latest
+```
+
+erhält mensch eine kleinen Hilfetext.
+
+Um ein bestimmtes Repository zu benutzen, muss man die URL angeben. 
+Ggf. kann hier auch mittels "--username=<USERNAME>" und "--password=<PASSWORD>"
+die Zugangsdaten für ein Repository angegeben werden. 
+
+**Wichtig:** Das funktioniert nur, wenn man keine 2-Faktoren-Authentifizierung aktiviert hat!
 
 ```
 > docker run -v /Volumes/norman/Docker/results:/home/Vorlesungen/results \
              -it nmarkgraf/make-vorlesungen:latest \
-             --repourl=https://github.com/luebby/Vorlesungen \
+             --repourl=https://github.com/luebby/Vorlesungen.git \
              --username=USERNAME \
              --password=PASSWORD
 ```
 
-
-Um ein bestimmtes Modul zu erzeugen können sie die Option "--modul" wie folgt nutzen:
+Um ein bestimmtes Modul, wie z.B. "Wissenschaftliche-Methodik" oder "Datenerhebung-Statistik", zu erzeugen können sie die Option "--modul" wie folgt nutzen:
 
 ```
 > docker run -v /Volumes/norman/Docker/results:/home/Vorlesungen/results \
@@ -71,13 +82,19 @@ Um ein bestimmtes Modul zu erzeugen können sie die Option "--modul" wie folgt n
              --modul=Wissenschaftliche-Methodik 
 ```
 
+Mit "--modul=<Modulbezeichnung>" wird dann das Skript "<Modulbezeichung>.Rmd" übersetzt.
 
-Damit wird ein Repository geclont und die Dateien "RunMeFirst.R" und "makerender.R" aus dem Repository ausgeführt.
+Dazu wird das angegebene Repository geclont und die Dateien "RunMeFirst.R" und "makerender.R" aus dem Repository ausgeführt.
+
 Anschliessend werden alle PDF Dateien aus dem Hauptverzeichnis (des Repositories) unter "/Volmes/norman/Docker/results" (also dem lokalen Verzeichnis) gespeichert.
-Statt **USERNAME** und **PASSWORD** müssen (ggf. bei privaten Repositories) 
-die Login-Daten für GutHub eingesetzt werden.
 
-Ebenso wird im Unterverzeichnis "log" alle erzeugten LOG Dateien gespeichert.
+**Hinweis:**
+Statt **USERNAME** und **PASSWORD** müssen (ggf. bei privaten Repositories) 
+die Login-Daten für GutHub eingesetzt werden!
+
+Zum Schluss werden Unterverzeichnis "results/log" alle erzeugten Log-Dateien 
+gespeichert.
+
 
 ## Wie können Entwickler neue images auf den Docker hun speichern?
 
@@ -97,11 +114,4 @@ Der gesamte Erstellungszyklus lautet also:
 > docker tag nmarkgraf/make-vorlesungen nmarkgraf/make-vorlesungen:v0.6
 > docker push nmarkgraf/make-vorlesungen
 ```
-
-## Aktuelle Version:
-
-- latest: digest: sha256:c3b10966899c75cdeb5e86d6f64a79e0f70b19a5285d479d5adbf2d51cb72d77 size: 3469
-
-- v0.5: digest: sha256:c3b10966899c75cdeb5e86d6f64a79e0f70b19a5285d479d5adbf2d51cb72d77 size: 3469
-
 

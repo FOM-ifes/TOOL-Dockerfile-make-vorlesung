@@ -11,6 +11,8 @@ RUN /rocker_scripts/install_tidyverse.sh
 ENV CTAN_REPO=http://mirror.ctan.org/systems/texlive/tlnet
 ENV PATH=/usr/local/texlive/bin/x86_64-linux:$PATH
 RUN /rocker_scripts/install_verse.sh
+
+# Installiere notwendige (La-)TeX-Pakete
 RUN tlmgr install amscls amsmath amsmath auxhook beamer bigintcalc bitset \
                   etexcmds etoolbox fp geometry gettitlestring hycolor \
                   hyperref iftex intcalc kvdefinekeys kvsetkeys letltxmacro \
@@ -21,14 +23,16 @@ RUN tlmgr install amscls amsmath amsmath auxhook beamer bigintcalc bitset \
                   collectbox csquotes babel-german epstopdf-pkg grfext \
                   fpl mathpazo palatino dvips.x86_64-linux dvips eulervm \
                   symbol psnfss kvoptions infwarerr microtype systeme \
-                  hyphen-german 
+                  hyphen-german was ulem
+
+# Installiere git tcl/tk und ImageMagick
 RUN apt-get update && \
-    apt-get -y install git tcl tk expect imagemagick \
+    apt-get install -y --no-install-recommends \
+                    git tcl tk expect imagemagick \
     && pip3 install panflute
 RUN apt-get clean
 
-# Anpassungen der ImageMagick policy, damit nach pdf konvertiert werden kann!
-RUN cp policy.xml etc/ImageMagick-6/policy.xml
+# Installiere notwendige R Pakete
 RUN install2.r --skipinstalled --error \
     futile.logger futile.options \
     git2r \
@@ -45,14 +49,18 @@ RUN install2.r --skipinstalled --error \
     mvtnorm lsr lsa kableExtra ineq ggfortify corrplot AlgDesign nFactors \
     okcupiddata randomForest rpart.plot ggthemes
 
+# Aufräumen
+RUN rm -rf /tmp/downloaded_packages
+
 RUN mkdir /home/Vorlesungen
 RUN mkdir /home/Vorlesungen/results
 WORKDIR /home/Vorlesungen
-
+# Anpassungen der ImageMagick policy, damit nach pdf konvertiert werden kann!
+COPY policy.xml /etc/ImageMagick-6/policy.xml
 COPY make-docker.R /home/Vorlesungen
 
 # Debug Einstieg
-#ENTRYPOINT ["/bin/sh"]
+ENTRYPOINT ["/bin/sh"]
 
 # Normales, automatisierter Einstieg
 ENTRYPOINT ["Rscript", "make-docker.R"]
