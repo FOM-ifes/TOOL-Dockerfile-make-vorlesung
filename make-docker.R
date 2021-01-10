@@ -2,6 +2,9 @@
 # ----------------------------------------------------------------------------
 # R Skript - (W) by N. Markgraf in 2021
 # ----------------------------------------------------------------------------
+# DEBUG <- FALSE
+DEBUG <- TRUE
+
 # Paket zum Umgang mit GitHub Repositoies
 library(git2r)
 
@@ -53,6 +56,31 @@ option_list = list(
 
 opt_parser <- OptionParser(option_list=option_list);
 opt <- parse_args(opt_parser);
+
+#### DEBUG ####
+if (DEBUG) {
+print("DEBUG: Aufrufinformationen")
+if (!is.null(opt$username)) {
+  print(paste0("--username=",opt$username))
+}
+if (!is.null(opt$password)) {
+  print(paste0("--password=","**********"))
+}
+
+if (!is.null(opt$repourl)) {
+  print(paste0("--repourl=",opt$repourl))
+}
+if (!is.null(opt$name)) {
+  print(paste0("--name=",opt$name))
+}
+if (!is.null(opt$modul)) {
+  print(paste0("--modul=",opt$modul))
+}
+}
+
+####-------####
+
+modul_name <- opt$modul
 
 # default:
 username <- NULL
@@ -136,9 +164,12 @@ f <- list.files("pandoc-filter/*.py", all.files = TRUE, full.names = TRUE, recur
 Sys.chmod(f, (file.info(f)$mode | "777"))
 
 # Den eigentlichen render-Prozess starten:
-if (exists("opt")) {
-  if (!is.null(opt$modul)) {
-    commandArgs <- function(...) opt$modul
+if (exists("modul_name")) {
+  if (!is.null(modul_name)) {
+    if (DEBUG) {
+      print(paste("makerender.R Options:", modul_name))
+    }
+    commandArgs <- function(...) list(modul_name)
   }
 }
 source("makerender.R")
