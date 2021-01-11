@@ -59,28 +59,30 @@ opt <- parse_args(opt_parser);
 
 #### DEBUG ####
 if (DEBUG) {
-print("DEBUG: Aufrufinformationen")
-if (!is.null(opt$username)) {
-  print(paste0("--username=",opt$username))
-}
-if (!is.null(opt$password)) {
-  print(paste0("--password=","**********"))
-}
-
-if (!is.null(opt$repourl)) {
-  print(paste0("--repourl=",opt$repourl))
-}
-if (!is.null(opt$name)) {
-  print(paste0("--name=",opt$name))
-}
-if (!is.null(opt$modul)) {
-  print(paste0("--modul=",opt$modul))
-}
+  print("DEBUG: Aufrufinformationen")
+  if (!is.null(opt$username)) {
+    print(paste0("--username=", opt$username))
+  }
+  if (!is.null(opt$password)) {
+    print(paste0("--password=", "**********"))
+  }
+  
+  if (!is.null(opt$repourl)) {
+    print(paste0("--repourl=", opt$repourl))
+  }
+  if (!is.null(opt$name)) {
+    print(paste0("--name=", opt$name))
+  }
+  if (!is.null(opt$modul)) {
+    print(paste0("--modul=", opt$modul))
+  }
 }
 
 ####-------####
 
-modul_name <- opt$modul
+modul_name <- paste0(opt$modul)
+print(paste("Setze Modulename auf", opt$modul))
+print(paste("Setze Modulename auf", modul_name))
 
 # default:
 username <- NULL
@@ -118,10 +120,8 @@ repo_path <- file.path("/home/Vorlesungen", repo_name)
 dir.create(repo_path, recursive = TRUE)
 
 
-print(cred)
-
 if (!is.null(opt$sshkey)) {
-  print("### 0 ###")
+  if (DEBUG) { print("### 0 ###") }
   fileConn <- file("./temp_ssh_key")
   writeLines(opt$sshkey, fileConn)
   close(fileConn)
@@ -129,20 +129,20 @@ if (!is.null(opt$sshkey)) {
   writeLines(opt$sshkeypub, fileConn)
   close(fileConn)
 
-  print("### 1 ###")
+  if (DEBUG) { print("### 1 ###") }
   f <- list.files("./temp_ssh_key", all.files = TRUE, full.names = TRUE, recursive = TRUE)
   Sys.chmod(f, (file.info(f)$mode | "600"))
   f <- list.files("./temp_ssh_key.pub", all.files = TRUE, full.names = TRUE, recursive = TRUE)
   Sys.chmod(f, (file.info(f)$mode | "644"))
   # file.show("./temp_ssh_key")
   # file.show("./temp_ssh_key.pub")
-  print(libgit2_features())
+  if (DEBUG) { print(libgit2_features()) }
   
-  print("### 2 ###")
+  if (DEBUG) { print("### 2 ###") }
   cred <- cred_ssh_key("./temp_ssh_key.pub", "./temp_ssh_key")
-  print(cred)
+  if (DEBUG) { print(cred) }
   
-  print("### 4 ###")
+  if (DEBUG) { print("### 3 ###") }
   
   #repo <- clone(url = repo_url,
   #              local_path = repo_path, 
@@ -162,22 +162,35 @@ setwd(repo_path)
 
 # Zuerst das "RunMeFirst.R" starten, damit alle weiteren Pakete
 # installiert werden
+print("Prüfe ob RunMeFirst.R gestartet werden kann!")
 if (file.exists("RunMeFirst.R")) {
-  source("RunMeFirst.R")
+  print("Starte RunMeFirst.R:")
+  #-- Leider überschreibt "source(..)" alle lokalen Variabeln.
+  # source("RunMeFirst.R", local=TRUE)
+  #-- daher:
+  ee <- new.env()
+  sys.source('RunMeFirst.R', ee)
 }
 
+print("Pandoc-Filter mit korrekten Zugriffsrechten ausstatten!")
 f <- list.files("pandoc-filter/*.py", all.files = TRUE, full.names = TRUE, recursive = TRUE)
 Sys.chmod(f, (file.info(f)$mode | "777"))
 
 # Den eigentlichen render-Prozess starten:
+print("Prüfe makerender.R Optionen!")
 if (exists("modul_name")) {
   if (!is.null(modul_name)) {
     if (DEBUG) {
-      print(paste("makerender.R Options:", modul_name))
+      print(paste("makerender.R Optione:", modul_name))
     }
     commandArgs <- function(...) list(modul_name)
   }
+} else {
+  print("Oops: modul_name fehlt!")
 }
+
+print("Starte makerender.R:")
+
 source("makerender.R")
 
 # Ergebnisse in "results" kopieren
