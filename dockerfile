@@ -29,13 +29,13 @@ RUN tlmgr install amscls amsmath amsmath auxhook beamer bigintcalc bitset \
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
                     git tcl tk expect imagemagick \
+                    libssh2-1 libssh2-1-dev \
     && pip3 install panflute
 RUN apt-get clean
 
 # Installiere notwendige R Pakete
 RUN install2.r --skipinstalled --error \
     futile.logger futile.options \
-    git2r \
     optparse getopt \
     mosaic tidyverse \
     rmarkdown knitr tinytex gert credentials \
@@ -49,18 +49,26 @@ RUN install2.r --skipinstalled --error \
     mvtnorm lsr lsa kableExtra ineq ggfortify corrplot AlgDesign nFactors \
     okcupiddata randomForest rpart.plot ggthemes
 
+RUN installGithub.r ropensci/git2r
+
 # Aufräumen
 RUN rm -rf /tmp/downloaded_packages
 
 RUN mkdir /home/Vorlesungen
 RUN mkdir /home/Vorlesungen/results
 WORKDIR /home/Vorlesungen
+
+RUN mkdir /root/.ssh
+COPY config /root/.ssh/config
+
 # Anpassungen der ImageMagick policy, damit nach pdf konvertiert werden kann!
 COPY policy.xml /etc/ImageMagick-6/policy.xml
 COPY make-docker.R /home/Vorlesungen
+COPY git-clone.sh /home/Vorlesungen
+RUN chmod 777 /home/Vorlesungen/git-clone.sh
 
 # Debug Einstieg
-ENTRYPOINT ["/bin/sh"]
+#ENTRYPOINT ["/bin/sh"]
 
 # Normales, automatisierter Einstieg
 ENTRYPOINT ["Rscript", "make-docker.R"]

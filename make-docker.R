@@ -128,10 +128,15 @@ if (!is.null(opt$sshkey)) {
   fileConn <- file("./temp_ssh_key.pub")
   writeLines(opt$sshkeypub, fileConn)
   close(fileConn)
-  
+
   print("### 1 ###")
-  file.show("./temp_ssh_key")
-  file.show("./temp_ssh_key.pub")
+  f <- list.files("./temp_ssh_key", all.files = TRUE, full.names = TRUE, recursive = TRUE)
+  Sys.chmod(f, (file.info(f)$mode | "600"))
+  f <- list.files("./temp_ssh_key.pub", all.files = TRUE, full.names = TRUE, recursive = TRUE)
+  Sys.chmod(f, (file.info(f)$mode | "644"))
+  # file.show("./temp_ssh_key")
+  # file.show("./temp_ssh_key.pub")
+  print(libgit2_features())
   
   print("### 2 ###")
   cred <- cred_ssh_key("./temp_ssh_key.pub", "./temp_ssh_key")
@@ -139,9 +144,10 @@ if (!is.null(opt$sshkey)) {
   
   print("### 4 ###")
   
-  repo <- clone(url = repo_url,
-                local_path = repo_path, 
-                credentials = cred)
+  #repo <- clone(url = repo_url,
+  #              local_path = repo_path, 
+  #              credentials = cred)
+  system(paste("/home/Vorlesungen/git-call.sh", repo_url, repo_path))
 } else {
   ## Clone the git2r repository
   repo <- clone(url = repo_url,
