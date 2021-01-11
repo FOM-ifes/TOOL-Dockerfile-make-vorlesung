@@ -147,7 +147,7 @@ if (!is.null(opt$sshkey)) {
   #repo <- clone(url = repo_url,
   #              local_path = repo_path, 
   #              credentials = cred)
-  system(paste("/home/Vorlesungen/git-call.sh", repo_url, repo_path))
+  system(paste("/home/Vorlesungen/git-clone.sh", repo_url, repo_path))
 } else {
   ## Clone the git2r repository
   repo <- clone(url = repo_url,
