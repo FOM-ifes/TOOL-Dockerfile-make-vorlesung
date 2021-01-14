@@ -44,29 +44,59 @@ weche tags gerade auf dem Hub gespeichert sind und damit von den Nutzer*innen ge
 
 ## Wie startet man ein neues Docker images?
 
+### Vorbereitungen
+
+Sie brauchen ein lokales, leeres Verzeichnis, welches Sie mit der Docker-Umgebung teilen, um darin die
+übersetzten PDF Dokumente zu erhalten.
+Dieses Verzeichnis heißt für das Docker Images: "/home/Vorlesungen/results"
+
+Sie können das Verzeichnis frei Wählen, es muss nur beschreibbar sein.
+
+Zum Beispiel "/tmp/Vorlesungsskripte"
+
+Legen Sie dazu das Verzeichnis an mittels:
+
+```
+make /tmp/Vorlesungsskripte
+```
+
+Ihr lokales Verzeichnis "/tmp/Vorlesungsskripte" soll also für das Docker Images: "/home/Vorlesungen/results" heissen.
+
+Dazu müssen Sie beim Aufruf des Docker Images die Option "-v" nutzen. D.h. also die Option "-v /tmp/Vorlesungsskripte:/home/Vorlesungen/results" angeben.
+
 Starten eines Docker images mittels:
 
 ```
-> docker run -v /Volumes/norman/Docker/results:/home/Vorlesungen/results \ 
+> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results \ 
               -it nmarkgraf/make-vorlesungen:<tag>
 ```
 
 Mittels 
 ```
-> docker run -v /Volumes/norman/Docker/results:/home/Vorlesungen/results \ 
+> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results \ 
               -it nmarkgraf/make-vorlesungen:latest
 ```
 
 erhält mensch eine kleinen Hilfetext.
 
-Um ein bestimmtes Repository zu benutzen, muss man die URL angeben. 
-Ggf. kann hier auch mittels "--username=<USERNAME>" und "--password=<PASSWORD>"
-die Zugangsdaten für ein Repository angegeben werden. 
+Um ein bestimmtes Repository zu benutzen, muss man die URL angeben. Dies passiert mit der Option "--repourl".
+Wollen Sie z.B. das Repository **luebby/Vorlesungen** von GitHub nutzen,so müssen sie die Option:
+"--repourl=https://github.com/luebby/Vorlesungen.git" angeben.
 
-**Wichtig:** Das funktioniert nur, wenn man keine 2-Faktoren-Authentifizierung aktiviert hat!
+Das GitHub-Repository **NMarkgraf/MathGrundDer-W-Info** mit der Option: 
+"--repourl=https://github.com/NMarkgraf/MathGrundDer-W-Info.git"
+
+Bei privaten Repositories müssen Sie sich erst authentifizieren.
+
+Sollten Sie die 2-Faktoren-Authentifikation von GitHub nutzen, so müssen Sie mit SSH Schlüsseln arbeiten. (Siehe weiter unten!)
+
+Sollten Sie sich nur mittels Nutzername und Passwort einloggen können, so können Sie mittels "--username=<USERNAME>" und "--password=<PASSWORD>"
+die Zugangsdaten angeben. 
+
+**Wichtig:** Das funktioniert nur, wenn man **keine 2-Faktoren-Authentifizierung aktiv**iert hat!
 
 ```
-> docker run -v /Volumes/norman/Docker/results:/home/Vorlesungen/results \
+> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results \
              -it nmarkgraf/make-vorlesungen:latest \
              --repourl=https://github.com/luebby/Vorlesungen.git \
              --username=USERNAME \
@@ -76,9 +106,11 @@ die Zugangsdaten für ein Repository angegeben werden.
 Um ein bestimmtes Modul, wie z.B. "Wissenschaftliche-Methodik" oder "Datenerhebung-Statistik", zu erzeugen können sie die Option "--modul" wie folgt nutzen:
 
 ```
-> docker run -v /Volumes/norman/Docker/results:/home/Vorlesungen/results \
+> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results \
              -it nmarkgraf/make-vorlesungen:latest \
              --repourl=https://github.com/luebby/Vorlesungsfolien.git \
+             --username=USERNAME \
+             --password=PASSWORD \
              --modul=Wissenschaftliche-Methodik 
 ```
 
@@ -86,7 +118,13 @@ Mit "--modul=<Modulbezeichnung>" wird dann das Skript "<Modulbezeichung>.Rmd" ü
 
 Dazu wird das angegebene Repository geclont und die Dateien "RunMeFirst.R" und "makerender.R" aus dem Repository ausgeführt.
 
-Anschliessend werden alle PDF Dateien aus dem Hauptverzeichnis (des Repositories) unter "/Volmes/norman/Docker/results" (also dem lokalen Verzeichnis) gespeichert.
+Anschliessend werden alle PDF Dateien aus dem Hauptverzeichnis (des Repositories) unter "/tmp/Vorlesungsskripte:/home/Vorlesungen/results" (also dem lokalen Verzeichnis) gespeichert. 
+
+Sie finden also die Dokumente z.B. mittels:
+
+```
+ls -al /tmp/Vorlesungsskripte
+```
 
 **Hinweis:**
 Statt **USERNAME** und **PASSWORD** müssen (ggf. bei privaten Repositories) 
