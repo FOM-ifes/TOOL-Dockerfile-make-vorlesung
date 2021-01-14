@@ -64,6 +64,8 @@ Ihr lokales Verzeichnis "/tmp/Vorlesungsskripte" soll also für das Docker Image
 
 Dazu müssen Sie beim Aufruf des Docker Images die Option "-v" nutzen. D.h. also die Option "-v /tmp/Vorlesungsskripte:/home/Vorlesungen/results" angeben.
 
+### Starten es Docker images
+
 Starten eines Docker images mittels:
 
 ```
@@ -79,6 +81,8 @@ Mittels
 
 erhält mensch eine kleinen Hilfetext.
 
+### Repository auswählen
+
 Um ein bestimmtes Repository zu benutzen, muss man die URL angeben. Dies passiert mit der Option "--repourl".
 Wollen Sie z.B. das Repository **luebby/Vorlesungen** von GitHub nutzen,so müssen sie die Option:
 "--repourl=https://github.com/luebby/Vorlesungen.git" angeben.
@@ -86,9 +90,18 @@ Wollen Sie z.B. das Repository **luebby/Vorlesungen** von GitHub nutzen,so müss
 Das GitHub-Repository **NMarkgraf/MathGrundDer-W-Info** mit der Option: 
 "--repourl=https://github.com/NMarkgraf/MathGrundDer-W-Info.git"
 
+
+### Authentifizieren bei GitHub für private Repositories
+
 Bei privaten Repositories müssen Sie sich erst authentifizieren.
 
+#### Sie haben eine 2-Faktoren-Authentifikation bei GitHub aktiviert?
+
 Sollten Sie die 2-Faktoren-Authentifikation von GitHub nutzen, so müssen Sie mit SSH Schlüsseln arbeiten. (Siehe weiter unten!)
+Bitte sprechen Sie mich an!
+
+
+#### Sie haben **keine** 2-Faktoren-Authentifikation bei GitHub aktiviert?
 
 Sollten Sie sich nur mittels Nutzername und Passwort einloggen können, so können Sie mittels "--username=<USERNAME>" und "--password=<PASSWORD>"
 die Zugangsdaten angeben. 
@@ -114,11 +127,17 @@ Um ein bestimmtes Modul, wie z.B. "Wissenschaftliche-Methodik" oder "Datenerhebu
              --modul=Wissenschaftliche-Methodik 
 ```
 
+
+### Was genau passiert im Hintergrund?
+
 Mit "--modul=<Modulbezeichnung>" wird dann das Skript "<Modulbezeichung>.Rmd" übersetzt.
 
-Dazu wird das angegebene Repository geclont und die Dateien "RunMeFirst.R" und "makerender.R" aus dem Repository ausgeführt.
+Dazu wird das angegebene Repository innerhalb des Docker Images mit git geclont und die Dateien "RunMeFirst.R" (sofern vorhanden) und "makerender.R <Modulbezeichnung>" aus dem Repository ausgeführt.
 
-Anschliessend werden alle PDF Dateien aus dem Hauptverzeichnis (des Repositories) unter "/tmp/Vorlesungsskripte:/home/Vorlesungen/results" (also dem lokalen Verzeichnis) gespeichert. 
+Nach erfolgreichem Übersetzen werden alle Dateien <Modulbezeichnung>*.pdf aus dem Hauptverzeichnis (des Docker Images Pfad: /home/Vorlesungen/results) in das lokale Verzeichnis (in unserem Beispiel "/tmp/Vorlesungsskripte") kopiert. 
+
+
+### Wo sind dann die Ergebnisse?
 
 Sie finden also die Dokumente z.B. mittels:
 
@@ -126,12 +145,6 @@ Sie finden also die Dokumente z.B. mittels:
 ls -al /tmp/Vorlesungsskripte
 ```
 
-**Hinweis:**
-Statt **USERNAME** und **PASSWORD** müssen (ggf. bei privaten Repositories) 
-die Login-Daten für GutHub eingesetzt werden!
-
-Zum Schluss werden Unterverzeichnis "results/log" alle erzeugten Log-Dateien 
-gespeichert.
 
 
 ## Wie können Entwickler neue images auf den Docker hun speichern?
