@@ -7,9 +7,9 @@ Maintainer: [NMarkgraf](https:/github.com/NMarkgraf)
 Email: [nmarkgraf@hotmail.com](mailto:nmarkgraf@hotmail.com?subject=make-vorlesung)
 
 
-## Wie erstellt man ein neues Docker images?
+## Wie erstellt man ein neues *Docker images*?
 
-Erstellen eines neuen Docker images mit:
+Erstellen eines neuen *Docker images* mit:
 
 ```
 > docker build -t nmarkgraf/make-vorlesungen .
@@ -20,7 +20,7 @@ Erstellen eines neuen Docker images mit:
 wobei <tag> nur eine neuen Tag ersetzt werden muss. Z.B.: v0.6
 
 
-## Wie läd man ein Docker images vom Docker hub?
+## Wie läd man ein *Docker images* vom *Docker hub*?
 
 Mit dem Befehl
 
@@ -64,13 +64,14 @@ Legen Sie dazu das Verzeichnis an mittels:
 mkdir /tmp/Vorlesungsskripte
 ```
 
-Ihr lokales Verzeichnis "/tmp/Vorlesungsskripte" soll also für das Docker Images: "/home/Vorlesungen/results" heissen.
+Ihr lokales Verzeichnis "/tmp/Vorlesungsskripte" soll also für das *Docker images*: "/home/Vorlesungen/results" heissen.
 
-Dazu müssen Sie beim Aufruf des Docker Images die Option "-v" nutzen. D.h. also die Option "-v /tmp/Vorlesungsskripte:/home/Vorlesungen/results" angeben.
+Dazu müssen Sie beim Aufruf des *Docker images* die Option "-v" nutzen. D.h. also die Option "-v /tmp/Vorlesungsskripte:/home/Vorlesungen/results" angeben.
 
-### Starten es Docker images
 
-Starten eines Docker images mittels:
+### Starten es *Docker images*
+
+Starten eines *Docker images* mittels:
 
 ```
 > docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results -it nmarkgraf/make-vorlesungen:<tag>
@@ -82,6 +83,7 @@ Mittels
 ```
 
 erhält mensch eine kleinen Hilfetext.
+
 
 ### Repository auswählen
 
@@ -140,7 +142,7 @@ ls -al /tmp/Vorlesungsskripte
 
 
 
-## Wie können Entwickler neue images auf den *Docker hub* speichern?
+## Wie können Entwickler neue images auf dem *Docker hub* speichern?
 
 Neue Versionen können (von Berechtigten!) mittels
 
