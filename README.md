@@ -1,6 +1,10 @@
 # Dockerfile make-vorlesung
 
-Dockerfile und Co zum Erzeugen eines Docker images zum Übersetzen von Vorlesungsskripten
+Dockerfile & Co. zum Erzeugen eines *Docker images* mit dem mensch Vorlesungsskripte aus einem git/GitHub - Repository erzeugen kann.
+
+Maintainer: [NMarkgraf](https:/github.com/NMarkgraf)
+
+Email: [nmarkgraf@hotmail.com](mailto:nmarkgraf@hotmail.com?subject=make-vorlesung)
 
 
 ## Wie erstellt man ein neues Docker images?
@@ -69,14 +73,12 @@ Dazu müssen Sie beim Aufruf des Docker Images die Option "-v" nutzen. D.h. also
 Starten eines Docker images mittels:
 
 ```
-> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results \ 
-              -it nmarkgraf/make-vorlesungen:<tag>
+> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results -it nmarkgraf/make-vorlesungen:<tag>
 ```
 
 Mittels 
 ```
-> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results \ 
-              -it nmarkgraf/make-vorlesungen:latest
+> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results -it nmarkgraf/make-vorlesungen:latest
 ```
 
 erhält mensch eine kleinen Hilfetext.
@@ -109,22 +111,13 @@ die Zugangsdaten angeben.
 **Wichtig:** Das funktioniert nur, wenn man **keine 2-Faktoren-Authentifizierung aktiv**iert hat!
 
 ```
-> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results \
-             -it nmarkgraf/make-vorlesungen:latest \
-             --repourl=https://github.com/luebby/Vorlesungen.git \
-             --username=USERNAME \
-             --password=PASSWORD
+> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results -it nmarkgraf/make-vorlesungen:latest --repourl=https://github.com/luebby/Vorlesungen.git  --username=USERNAME --password=PASSWORD
 ```
 
 Um ein bestimmtes Modul, wie z.B. "Wissenschaftliche-Methodik" oder "Datenerhebung-Statistik", zu erzeugen können sie die Option "--modul" wie folgt nutzen:
 
 ```
-> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results \
-             -it nmarkgraf/make-vorlesungen:latest \
-             --repourl=https://github.com/luebby/Vorlesungsfolien.git \
-             --username=USERNAME \
-             --password=PASSWORD \
-             --modul=Wissenschaftliche-Methodik 
+> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results -it nmarkgraf/make-vorlesungen:latest --repourl=https://github.com/luebby/Vorlesungsfolien.git--username=USERNAME --password=PASSWORD --modul=Wissenschaftliche-Methodik 
 ```
 
 
