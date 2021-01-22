@@ -57,7 +57,7 @@ Zum Beispiel "/tmp/Vorlesungsskripte"
 Legen Sie dazu das Verzeichnis an mittels:
 
 ```
-make /tmp/Vorlesungsskripte
+mkdir /tmp/Vorlesungsskripte
 ```
 
 Ihr lokales Verzeichnis "/tmp/Vorlesungsskripte" soll also für das Docker Images: "/home/Vorlesungen/results" heissen.
