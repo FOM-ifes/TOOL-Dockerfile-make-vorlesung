@@ -140,7 +140,7 @@ ls -al /tmp/Vorlesungsskripte
 
 
 
-## Wie können Entwickler neue images auf den Docker hun speichern?
+## Wie können Entwickler neue images auf den *Docker hub* speichern?
 
 Neue Versionen können (von Berechtigten!) mittels
 
