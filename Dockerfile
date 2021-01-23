@@ -30,8 +30,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
                     git tcl tk expect imagemagick \
                     libssh2-1 libssh2-1-dev \
-    && pip3 install panflute
-RUN apt-get clean
+    && pip3 install panflute \
+    && apt-get clean
 
 # Installiere notwendige R Pakete
 RUN install2.r --skipinstalled --error \
@@ -52,10 +52,8 @@ RUN install2.r --skipinstalled --error \
 RUN installGithub.r ropensci/git2r
 
 # Aufräumen
-RUN rm -rf /tmp/downloaded_packages
+RUN rm -rf /tmp/downloaded_packages && mkdir /home/Vorlesungen && mkdir /home/Vorlesungen/results
 
-RUN mkdir /home/Vorlesungen
-RUN mkdir /home/Vorlesungen/results
 WORKDIR /home/Vorlesungen
 
 RUN mkdir /root/.ssh
