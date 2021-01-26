@@ -38,7 +38,7 @@ option_list = list(
                 metavar = "character"),
     make_option(c("-r", "--repourl"),
                 type = "character",
-                default = "https://github.com/luebby/Vorlesungsfolien.git",
+                default = "https://github.com/FOM-ifes/VL-Vorlesungsfolien.git",
                 # default = "https://github.com/NMarkgraf/MathGrundDer-W-Info.git",
                 help = "URL zum Repository [default= %default]",
                 metavar = "character"),
