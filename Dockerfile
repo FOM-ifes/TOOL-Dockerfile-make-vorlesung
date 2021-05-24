@@ -1,4 +1,4 @@
-FROM rocker/r-ver:4.0.3
+FROM rocker/r-ver:4.0.5
 
 ENV S6_VERSION=v2.1.0.2
 ENV RSTUDIO_VERSION=latest
@@ -23,7 +23,8 @@ RUN tlmgr install amscls amsmath amsmath auxhook beamer bigintcalc bitset \
                   collectbox csquotes babel-german epstopdf-pkg grfext \
                   fpl mathpazo palatino dvips.x86_64-linux dvips eulervm \
                   symbol psnfss kvoptions infwarerr microtype systeme \
-                  hyphen-german was ulem
+                  hyphen-german was ulem everysel
+# everysel sollte eigentlich ab LaTeX 2021 OBSOLET sein!
 
 # Installiere git tcl/tk und ImageMagick
 RUN apt-get update && \
@@ -38,7 +39,7 @@ RUN install2.r --skipinstalled --error \
     futile.logger futile.options \
     optparse getopt \
     mosaic tidyverse \
-    rmarkdown knitr tinytex gert credentials \
+    rmarkdown knitr tinytex \
     plot3D rgl formatR wordcloud lambda.r latex2exp \
     dagitty ggraph tidygraph ggdag \
     fracdiff lmtest timeDate tseries urca zoo RcppArmadillo forecast \
@@ -49,25 +50,19 @@ RUN install2.r --skipinstalled --error \
     mvtnorm lsr lsa kableExtra ineq ggfortify corrplot AlgDesign nFactors \
     okcupiddata randomForest rpart.plot ggthemes
 
-RUN installGithub.r ropensci/git2r
 
 # Aufräumen
-RUN rm -rf /tmp/downloaded_packages && mkdir /home/Vorlesungen && mkdir /home/Vorlesungen/results
+RUN rm -rf /tmp/downloaded_packages && mkdir /home/Vorlesungen
 
 WORKDIR /home/Vorlesungen
-
-RUN mkdir /root/.ssh
-COPY config /root/.ssh/config
 
 # Anpassungen der ImageMagick policy, damit nach pdf konvertiert werden kann!
 COPY policy.xml /etc/ImageMagick-6/policy.xml
 COPY make-docker.R /home/Vorlesungen
-COPY git-clone.sh /home/Vorlesungen
-RUN chmod 777 /home/Vorlesungen/git-clone.sh
 
 # Debug Einstieg
-#ENTRYPOINT ["/bin/sh"]
+#ENTRYPOINT ["/bin/bash"]
 
 # Normales, automatisierter Einstieg
 ENTRYPOINT ["Rscript", "make-docker.R"]
-CMD ["--help"]
+#CMD ["--help"]

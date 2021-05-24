@@ -1,26 +1,26 @@
 # Dockerfile make-vorlesung
 
-Dockerfile & Co. zum Erzeugen eines *Docker images* mit dem mensch Vorlesungsskripte aus einem git/GitHub - Repository erzeugen kann.
+Dockerfile & Co. zum Erzeugen eines *Docker image* mit dem Vorlesungsskripte 
+aus einem lokalen git/GitHub - Repository erzeugt werden kann.
 
 Maintainer: [NMarkgraf](https:/github.com/NMarkgraf)
 
 Email: [nmarkgraf@hotmail.com](mailto:nmarkgraf@hotmail.com?subject=make-vorlesung)
 
 
-## Wie erstellt man ein neues *Docker images*?
+## Wie erstellt man ein neues *Docker image*?
 
-Erstellen eines neuen *Docker images* mit:
-
+Erstellen eines neuen *Docker image* mit:
 ```
 > docker build -t nmarkgraf/make-vorlesungen .
-> docker tag nmarkgraf/make-vorlesungen nmarkgraf/make-vorlesungen:<tag> .
+> docker scan --accept-license -f Dockerfile nmarkgraf/make-vorlesungen 
+> docker tag nmarkgraf/make-vorlesungen nmarkgraf/make-vorlesungen:<tag>
 ```
 
+wobei <tag> nur eine neuen Tag ersetzt werden muss. Z.B.: v1.1
 
-wobei <tag> nur eine neuen Tag ersetzt werden muss. Z.B.: v0.6
 
-
-## Wie läd man ein *Docker images* vom *Docker hub*?
+## Wie läd mensch einen *Docker image* vom *Docker hub*?
 
 Mit dem Befehl
 
@@ -30,29 +30,33 @@ Mit dem Befehl
 
 wird die aktuelle Version geladen.
 
-Allgemein kann man die Version mit dem tag *<tag>* durch den Befehl:
+Allgemein kann man eine bestimmte Version mit dem tag *<tag>* durch den Befehl:
 
 ```
 > docker pull nmarkgraf/make-vorlesungen:<tag>
 ```
 
-laden. Will mann zum Beispiel die Version *v0.6* laden, so geht das mit:
+laden. Will mann zum Beispiel die Version *v1.0* laden, so geht das mit:
 ```
-> docker pull nmarkgraf/make-vorlesungen:v0.6
+> docker pull nmarkgraf/make-vorlesungen:v1.0
 ```
 
 
-Über https://registry.hub.docker.com/repository/docker/nmarkgraf/make-vorlesungen kann man sich ansehen,
-weche tags gerade auf dem Hub gespeichert sind und damit von den Nutzer*innen geladen werden können.
+Über https://registry.hub.docker.com/repository/docker/nmarkgraf/make-vorlesungen 
+kann angesehen werden,
+weche tags, und damit welche Versionen, gerade auf dem Hub gespeichert sind und 
+somit von den Nutzer:innen geladen werden können.
 
 
-## Wie startet man ein neues Docker images?
+## Wie startet man ein neues Docker image?
 
 ### Vorbereitungen
 
-Sie brauchen ein lokales, leeres Verzeichnis, welches Sie mit der Docker-Umgebung teilen, um darin die
-übersetzten PDF Dokumente zu erhalten.
-Dieses Verzeichnis heißt für das Docker Images: "/home/Vorlesungen/results"
+Sie brauchen ein lokales, leeres Verzeichnis, welches Sie mit der 
+Docker-Umgebung teilen, um darin die ihr lokale Version des GitHub-Repository 
+zu speichern.
+In diesem Verzeichnis werden auch die übersetzten PDF Dokumente erstellt.
+Dieses Verzeichnis heißt für das Docker Images: "/home/Vorlesungen/repo"
 
 Sie können das Verzeichnis frei Wählen, es muss nur beschreibbar sein.
 
@@ -64,9 +68,10 @@ Legen Sie dazu das Verzeichnis an mittels:
 mkdir /tmp/Vorlesungsskripte
 ```
 
-Ihr lokales Verzeichnis "/tmp/Vorlesungsskripte" soll also für das *Docker images*: "/home/Vorlesungen/results" heissen.
+Ihr lokales Reopository Verzeichnis "/tmp/Vorlesungsskripte" muss für das *Docker image*: "/home/Vorlesungen/repo" heissen.
 
-Dazu müssen Sie beim Aufruf des *Docker images* die Option "-v" nutzen. D.h. also die Option "-v /tmp/Vorlesungsskripte:/home/Vorlesungen/results" angeben.
+Dazu müssen Sie beim Aufruf des *Docker image* die Option "-v" nutzen. 
+D.h. also die Option "-v /tmp/Vorlesungsskripte:/home/Vorlesungen/repo" angeben.
 
 
 ### Starten es *Docker images*
@@ -74,62 +79,44 @@ Dazu müssen Sie beim Aufruf des *Docker images* die Option "-v" nutzen. D.h. al
 Starten eines *Docker images* mittels:
 
 ```
-> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results -it nmarkgraf/make-vorlesungen:<tag>
+> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/repo -it nmarkgraf/make-vorlesungen:<tag>
 ```
 
 Mittels 
 ```
-> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results -it nmarkgraf/make-vorlesungen:latest
+> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/repo -it nmarkgraf/make-vorlesungen:latest
 ```
 
 erhält mensch eine kleinen Hilfetext.
 
-
-### Repository auswählen
-
-Um ein bestimmtes Repository zu benutzen, muss man die URL angeben. Dies passiert mit der Option "--repourl".
-Wollen Sie z.B. das Repository **luebby/Vorlesungen** von GitHub nutzen,so müssen sie die Option:
-"--repourl=https://github.com/luebby/Vorlesungen.git" angeben.
-
-Das GitHub-Repository **NMarkgraf/MathGrundDer-W-Info** mit der Option: 
-"--repourl=https://github.com/NMarkgraf/MathGrundDer-W-Info.git"
-
-
-### Authentifizieren bei GitHub für private Repositories
-
-Bei privaten Repositories müssen Sie sich erst authentifizieren.
-
-#### Sie haben eine 2-Faktoren-Authentifikation bei GitHub aktiviert?
-
-Sollten Sie die 2-Faktoren-Authentifikation von GitHub nutzen, so müssen Sie mit SSH Schlüsseln arbeiten. (Siehe weiter unten!)
-Bitte sprechen Sie mich an!
-
-
-#### Sie haben **keine** 2-Faktoren-Authentifikation bei GitHub aktiviert?
-
-Sollten Sie sich nur mittels Nutzername und Passwort einloggen können, so können Sie mittels "--username=<USERNAME>" und "--password=<PASSWORD>"
-die Zugangsdaten angeben. 
-
-**Wichtig:** Das funktioniert nur, wenn man **keine 2-Faktoren-Authentifizierung aktiv**iert hat!
-
-```
-> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results -it nmarkgraf/make-vorlesungen:latest --repourl=https://github.com/luebby/Vorlesungen.git  --username=USERNAME --password=PASSWORD
-```
-
 Um ein bestimmtes Modul, wie z.B. "Wissenschaftliche-Methodik" oder "Datenerhebung-Statistik", zu erzeugen können sie die Option "--modul" wie folgt nutzen:
 
 ```
-> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/results -it nmarkgraf/make-vorlesungen:latest --repourl=https://github.com/luebby/Vorlesungsfolien.git--username=USERNAME --password=PASSWORD --modul=Wissenschaftliche-Methodik 
+> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/repo -it nmarkgraf/make-vorlesungen:latest --modul=Wissenschaftliche-Methodik 
 ```
 
 
 ### Was genau passiert im Hintergrund?
 
-Mit "--modul=<Modulbezeichnung>" wird dann das Skript "<Modulbezeichung>.Rmd" übersetzt.
+Mit "--modul=<Modulbezeichnung>" wird dann das Skript "<Modulbezeichung>.Rmd"
+übersetzt. 
+Wollen Sie ein anderes Modul übersetzen, so muss eine entsprechende
+Datei in ihrem lokalen Repository Verzeichnis hinterlegt sein.
 
-Dazu wird das angegebene Repository innerhalb des Docker Images mit git geclont und die Dateien "RunMeFirst.R" (sofern vorhanden) und "makerender.R <Modulbezeichnung>" aus dem Repository ausgeführt.
+Bsp: Übersetzen des Skriptes "Datenerhebung-Statistik" benötigt die Datei
+"Datenerhebung-Statistik.Rmd" und kann mit dem folgenden Befehl übersetzt 
+werden:
 
-Nach erfolgreichem Übersetzen werden alle Dateien <Modulbezeichnung>*.pdf aus dem Hauptverzeichnis (des Docker Images Pfad: /home/Vorlesungen/results) in das lokale Verzeichnis (in unserem Beispiel "/tmp/Vorlesungsskripte") kopiert. 
+```
+> docker run -v /tmp/Vorlesungsskripte:/home/Vorlesungen/repo -it nmarkgraf/make-vorlesungen:latest --modul=Datenerhebung-Statistik 
+```
+
+Zum Übersetzen wird in dem lokalen Repository Verzeichnis das Skript
+"makerender.R <Modulbezeichnung>" ausgeführt. 
+Welches dann das entsprechende Skript übersetzt.
+
+Nach erfolgreichem Übersetzen werden alle Dateien <Modulbezeichnung>*.pdf 
+sowohl im Docker, als auch in ihrem lokalen Repository-Verzeichnis erstellt.
 
 
 ### Wo sind dann die Ergebnisse?
@@ -140,6 +127,8 @@ Sie finden also die Dokumente z.B. mittels:
 ls -al /tmp/Vorlesungsskripte
 ```
 
+Ggf. müssen sie den Pfad zu ihrem lokalen Repository Verzeichnis entsprechend 
+anpassen.
 
 
 ## Wie können Entwickler neue images auf dem *Docker hub* speichern?
@@ -157,7 +146,7 @@ Der gesamte Erstellungszyklus lautet also:
 
 ```
 > docker build -t nmarkgraf/make-vorlesungen .
-> docker tag nmarkgraf/make-vorlesungen nmarkgraf/make-vorlesungen:v0.6
+> docker tag nmarkgraf/make-vorlesungen nmarkgraf/make-vorlesungen:v1.0
 > docker push nmarkgraf/make-vorlesungen
 ```
 
