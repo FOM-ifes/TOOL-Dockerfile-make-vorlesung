@@ -3,9 +3,9 @@
 Dockerfile & Co. zum Erzeugen eines *Docker image* mit dem Vorlesungsskripte 
 aus einem lokalen git/GitHub - Repository erzeugt werden kann.
 
-Maintainer: [NMarkgraf](https:/github.com/NMarkgraf)
+- Maintainer: [NMarkgraf](https:/github.com/NMarkgraf) 
 
-Email: [nmarkgraf@hotmail.com](mailto:nmarkgraf@hotmail.com?subject=make-vorlesung)
+- Email: [nmarkgraf@hotmail.com](mailto:nmarkgraf@hotmail.com?subject=GitHub-Dockerfile-make-vorlesung)
 
 
 ## Wie erstellt man ein neues *Docker image*?

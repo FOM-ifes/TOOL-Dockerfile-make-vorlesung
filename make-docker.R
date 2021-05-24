@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 # =============================================================================
-# R Skript - (W) by N. Markgraf in 2021         Version: 1.0 vom 24. Mai 2021
+# R Skript - (C) by N. Markgraf in 2021         Version: 1.0 vom 24. Mai 2021
 # -----------------------------------------------------------------------------
 DEBUG <- FALSE
 #DEBUG <- TRUE
@@ -72,4 +72,5 @@ print("Starte makerender.R:")
 #ee <- new.env()
 #sys.source('makerender.R', ee)
 source("makerender.R")
+
 # =============================================================================
