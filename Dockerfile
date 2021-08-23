@@ -1,4 +1,4 @@
-FROM rocker/r-ver:4.0.5
+FROM rocker/r-ver:4.1.1
 
 ENV S6_VERSION=v2.1.0.2
 ENV RSTUDIO_VERSION=latest
@@ -23,7 +23,7 @@ RUN tlmgr install amscls amsmath amsmath auxhook beamer bigintcalc bitset \
                   collectbox csquotes babel-german epstopdf-pkg grfext \
                   fpl mathpazo palatino dvips.x86_64-linux dvips eulervm \
                   symbol psnfss kvoptions infwarerr microtype systeme \
-                  hyphen-german was ulem everysel
+                  hyphen-german was ulem everysel forloop
 # everysel sollte eigentlich ab LaTeX 2021 OBSOLET sein!
 
 # Installiere git tcl/tk und ImageMagick
@@ -48,7 +48,7 @@ RUN install2.r --skipinstalled --error \
     hunspell tokenizers janeaustenr tidytext \
     mnormt psych combinat questionr klaR proto showtext sysfonts emojifont \
     mvtnorm lsr lsa kableExtra ineq ggfortify corrplot AlgDesign nFactors \
-    okcupiddata randomForest rpart.plot ggthemes
+    randomForest rpart.plot ggthemes
 
 
 # Aufräumen
