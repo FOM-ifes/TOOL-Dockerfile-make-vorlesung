@@ -23,7 +23,7 @@ RUN tlmgr install amscls amsmath amsmath auxhook beamer bigintcalc bitset \
                   collectbox csquotes babel-german epstopdf-pkg grfext \
                   fpl mathpazo palatino dvips.x86_64-linux dvips eulervm \
                   symbol psnfss kvoptions infwarerr microtype systeme \
-                  hyphen-german was ulem everysel forloop
+                  hyphen-german was ulem everysel forloop hyphenat
 # everysel sollte eigentlich ab LaTeX 2021 OBSOLET sein!
 
 # Installiere git tcl/tk und ImageMagick
