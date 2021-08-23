@@ -65,9 +65,17 @@ Zum Beispiel "/tmp/Vorlesungsskripte"
 Legen Sie dazu das Verzeichnis an mittels:
 
 ```
-mkdir /tmp/Vorlesungsskripte
+> mkdir /tmp/Vorlesungsskripte
 ```
 
+Legen Sie in dieses Verzeichnis z.B. den Inhalt des ZIP-Archives des Vorlesungsrepositories ab oder nutzen sie den Befehl:
+
+```
+> git clone https://github.com/luebby/Vorlesungen.git --branch master /tmp/Vorlesungsskripte
+```
+  
+Wobei Sie mir `--branch master` den aktuellen Branch auswählen (können).
+  
 Ihr lokales Reopository Verzeichnis "/tmp/Vorlesungsskripte" muss für das *Docker image*: "/home/Vorlesungen/repo" heissen.
 
 Dazu müssen Sie beim Aufruf des *Docker image* die Option "-v" nutzen. 
@@ -124,7 +132,7 @@ sowohl im Docker, als auch in ihrem lokalen Repository-Verzeichnis erstellt.
 Sie finden also die Dokumente z.B. mittels:
 
 ```
-ls -al /tmp/Vorlesungsskripte
+> ls -al /tmp/Vorlesungsskripte
 ```
 
 Ggf. müssen sie den Pfad zu ihrem lokalen Repository Verzeichnis entsprechend 
