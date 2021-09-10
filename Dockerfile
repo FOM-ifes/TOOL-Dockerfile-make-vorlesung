@@ -64,5 +64,5 @@ COPY make-docker.R /home/Vorlesungen
 #ENTRYPOINT ["/bin/bash"]
 
 # Normales, automatisierter Einstieg
-ENTRYPOINT ["Rscript", "make-docker.R"]
+ENTRYPOINT ["Rscript", "/home/Vorlesungen/make-docker.R"]
 #CMD ["--help"]
