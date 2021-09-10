@@ -27,7 +27,9 @@ print(paste("Setze Modulename auf", modul_name))
 
 # -----------------------------------------------------------------------------
 # In das locale Repository Verzeichnis wechseln
-repo_path <- file.path("/home/Vorlesungen/repo")
+#repo_path <- file.path("/home/Vorlesungen/repo")
+#setwd(repo_path)
+repo_path <- file.path("/home/Vorlesungen")
 setwd(repo_path)
 
 # -----------------------------------------------------------------------------
